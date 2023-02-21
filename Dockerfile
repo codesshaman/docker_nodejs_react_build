@@ -4,7 +4,7 @@ WORKDIR /react-app
 
 COPY source/package.json .
 
-RUN yarn install
+RUN npm install
 
 RUN rm package.json
 
@@ -12,7 +12,7 @@ COPY source .
 
 # RUN yarn add @craco/craco yarn add craco-less
 
-RUN yarn run build
+RUN npm run build
 
 FROM nginx:1.23.3-alpine-slim
 
