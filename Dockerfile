@@ -1,23 +1,21 @@
-FROM node:16.17.1-alpine3.15 as node
+FROM node:16.17.1-alpine3.15 as builder
 
-WORKDIR /react-app
-
-COPY source/package.json .
-
-RUN yarn install
-
-RUN rm package.json
+WORKDIR /app
 
 COPY source .
 
-# RUN yarn add @craco/craco yarn add craco-less
+RUN yarn install
 
-RUN yarn run build
+RUN yarn build
 
-FROM nginx:1.23.3-alpine-slim
+FROM nginx:1.23.3-alpine-slim as production
 
-COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+# ENV NODE_ENV production
 
-COPY --from=node /react-app/build /usr/share/nginx/html
+COPY --from=builder /app/build /usr/share/nginx/html
+
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

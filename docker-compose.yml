@@ -5,11 +5,6 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 85:80
+      - 80:80
     restart: unless-stopped
-    # environment:
-    #   AGENT_AUTO_REGISTER_KEY: $AGENT_AUTO_REGISTER_KEY
-    #   GO_SERVER_URL: $GOCD_SERVER_URL
-    volumes:
-      - ./nginx:/etc/nginx/:z
     container_name: react_builder
