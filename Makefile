@@ -29,7 +29,8 @@ help:
 
 build:
 	@printf "$(OK_COLOR)==== Building configuration ${name}... ====$(NO_COLOR)\n"
-	@docker-compose -f ./docker-compose.yml up -d --build
+	@bash build.sh
+	# @docker-compose -f ./docker-compose.yml up -d --build
 
 down:
 	@printf "$(ERROR_COLOR)==== Stopping configuration ${name}... ====$(NO_COLOR)\n"
@@ -47,8 +48,9 @@ clean: down
 	@printf "$(ERROR_COLOR)==== Cleaning configuration ${name}... ====$(NO_COLOR)\n"
 	@docker system prune -a
 
-fclean:
+fclean: down
 	@printf "$(ERROR_COLOR)==== Total clean of all configurations docker ====$(NO_COLOR)\n"
+	@bash clean.sh
 	# Uncommit if necessary:
 	# @docker stop $$(docker ps -qa)
 	# @docker system prune --all --force --volumes

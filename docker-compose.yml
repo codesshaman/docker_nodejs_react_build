@@ -4,7 +4,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        FOLDER: $FOLDER
     ports:
-      - 80:80
+      - 85:80
     restart: unless-stopped
     container_name: react_builder
